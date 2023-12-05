@@ -40,8 +40,13 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [friends=" + friends + ", feestructure=" + feestructure + "]";
+		return "Person [friends=" + friends + ", feestructure=" + feestructure + ", properties=" + properties + "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return "Person [friends=" + friends + ", feestructure=" + feestructure + "]";
+//	}
 
 
 	

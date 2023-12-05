@@ -9,7 +9,7 @@ public class Samosa {
 	}
 
 	public void setPrice(double price) {
-		System.out.println("Setting price");
+		System.out.println("Setting property");
 		this.price = price;
 	}
 
@@ -22,13 +22,14 @@ public class Samosa {
 	public String toString() {
 		return "Samosa [price=" + price + "]";
 	}
-
-	public void hey() {
-		System.out.println("Inside init method: hey how are you?");
+	
+	public void init() {
+		System.out.println("Inside init method: hey we started ");
 	}
-
-	public void bye() {
-		System.out.println("Inside destroy method: bye bye i am going to die");
+	
+	public void destroy1() {
+		System.out.println("Inside destroy method: Bye Bye we are leaving");
 	}
-
+	
+	
 }

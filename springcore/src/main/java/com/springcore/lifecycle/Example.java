@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 public class Example {
+
 	private String subject;
 
 	public String getSubject() {
@@ -26,11 +27,12 @@ public class Example {
 
 	@PostConstruct
 	public void start() {
-		System.out.println("starting method");
+		System.out.println("Here the init method");
 	}
 
 	@PreDestroy
-	public void end() {
-		System.out.println("ending method");
+	public void destroy() {
+		System.out.println("Here the destroy method");
 	}
+
 }

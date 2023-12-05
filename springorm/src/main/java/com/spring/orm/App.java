@@ -1,91 +1,144 @@
 package com.spring.orm;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.spring.orm.dao.StudentDao;
+import com.spring.orm.entities.Student;
+
 /**
  * Hello world!
  *
  */
-
-//class Animal {
-//	Animal() {
-//		System.out.println("animal is created");
-//	}
-//
-//	 void eat() {
-//		// TODO Auto-generated method stub
-//		System.out.println("eating ...");
-//	}
-//	
-//	
-//}
-//
-//class Dog extends Animal {
-////	Dog() {
-////		super();
-////		System.out.println("dog is created");
-////	}
-//	
-//	void eat(){System.out.println("eating bread...");}  
-//	void bark(){System.out.println("barking...");}  
-//	
-//	void work(){  
-//		super.eat();
-//	bark();  
-//	}  
-//	
-//
-//}
-
-
-class Animal { }  
-
-class Dog3 extends Animal {  
-  static void method(Animal a) {  
-    if(a instanceof Dog3){  
-       Dog3 d=(Dog3)a;//downcasting  
-       System.out.println("ok downcasting performed");  
-            
-    }
-    
-//    Dog3 d=(Dog3)a;//downcasting  
-//    System.out.println("ok downcasting performed");  
-  }  
-   
-
-    
- }  
-
-class A{  
-A getA(){  
-return this;  
-}  
-void msg(){System.out.println("Hello java");}  
-}  
- 
-
 public class App {
+	public static void main(String[] args) {
 
-	public static void main(String args[]) {
-		
-		new A().msg();  
+		ApplicationContext context = new ClassPathXmlApplicationContext("Config.xml");
 
+		StudentDao studentDao = context.getBean("StudentDao", StudentDao.class);
 
-		int arr[]={4,4,5};  
-		//getting the class name of Java array  
-		Class c=arr.getClass();  
-		String name=c.getName();  
-		//printing the class name of Java array   
-		System.out.println(name);  
-		
-	
-		
-		
-//		Animal a=new Dog3();  
-//		
-////		Animal a=new Animal();  
-//	    Dog3.method(a);  
-	    
-//		Dog d = new Dog();
-//		d.work();
+//		Student student = new Student(2008, "Anant Kumar", "Banaras");
+//		int r = studentDao.insert(student);		 
+//		System.out.println("Done..."+r);
 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		boolean go = true;
+		while (go) {
+
+			System.out.println("Press 1 for add new student");
+			System.out.println("Press 2 for display all students");
+			System.out.println("Press 3 for get details of single student");
+			System.out.println("Press 4 for delete students");
+			System.out.println("Press 5 for update student");
+			System.out.println("Press 6 for exit");
+
+			try {
+				int input = Integer.parseInt(br.readLine());
+
+				switch (input) {
+				case 1:
+					// add a new student
+
+					// taking inputs from users
+					System.out.println("Enter user id: ");
+					int uid = Integer.parseInt(br.readLine());
+
+					System.out.println("Enter user name: ");
+					String uName = br.readLine();
+
+					System.out.println("Enter user city");
+					String uCity = br.readLine();
+
+					// creating student object and setting values
+					Student student = new Student();
+					student.setStudentId(uid);
+					student.setStudentName(uName);
+					student.setStudentCity(uCity);
+
+					// saving student object to database by calling insert of student dao
+					int r = studentDao.insert(student);
+					System.out.println(r + " student added");
+					System.out.println("***********************************************");
+					System.out.println();
+
+					break;
+				case 2:
+					// display all students
+					System.out.println("***********************************************");
+					List<Student> allStudent = studentDao.getAllStudent();
+					for (Student s : allStudent) {
+
+						System.out.println("Name : " + s.getStudentName());
+						System.out.println("Id : " + s.getStudentId());
+						System.out.println("City : " + s.getStudentCity());
+						System.out.println("_______________________________________________");
+
+					}
+					System.out.println("***********************************************");
+
+					break;
+				case 3:
+					// get single student data
+					System.out.println("***********************************************");
+					System.out.println("Enter user id: ");
+					int userId = Integer.parseInt(br.readLine());
+					Student student2 = studentDao.getStudent(userId);
+					System.out.println("Id : " + student2.getStudentId());
+					System.out.println("Name : " + student2.getStudentName());
+					System.out.println("City : " + student2.getStudentCity());
+
+					System.out.println("***********************************************");
+					break;
+				case 4:
+					// delete student
+					System.out.println("***********************************************");
+					System.out.println("Enter user id: ");
+					int id = Integer.parseInt(br.readLine());
+					studentDao.deleteStudent(id);
+					System.out.println("Student deleted...");
+
+					System.out.println("***********************************************");
+					break;
+				case 5:
+					// update the student
+
+					System.out.println("***********************************************");
+
+					System.out.println("Enter user id: ");
+					int upid = Integer.parseInt(br.readLine());
+
+					System.out.println("Enter user name: ");
+					String upName = br.readLine();
+
+					System.out.println("Enter user city");
+					String upCity = br.readLine();
+
+					// creating student object and setting values
+					Student student3 = new Student();
+					student3.setStudentId(upid);
+					student3.setStudentName(upName);
+					student3.setStudentCity(upCity);
+
+					studentDao.updateStudent(student3);
+					System.out.println("Student Updated...");
+
+					System.out.println("***********************************************");
+					break;
+				case 6:
+					// exit
+					go = false;
+					break;
+				}
+			} catch (Exception e) {
+
+				System.out.println("Invalid Input Try with another one !!");
+				System.out.println(e.getMessage());
+			}
+		}
+		System.out.println("Thank you using this application");
+		System.out.println("See you soon!!!");
 	}
 }
